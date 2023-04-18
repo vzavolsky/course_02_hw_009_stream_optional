@@ -30,14 +30,10 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/departments/all")
-    public List<Employee> showEmployeesByDepartment(@RequestParam("departmentId") int department) {
-        List<Employee> employees = employeeImpl.showEmployeesByDepartment(department);return employees;
+    public List<Employee> showEmployeesByDepartment(@RequestParam(value = "departmentId", required = false) int department) {
+        List<Employee> employees = employeeImpl.showEmployeesByDepartment(department);
+        return employees;
     }
-    /*@GetMapping(path = "/departments/all")
-    public List<Employee> showEmployeesByDepartment() {
-        //List<Employee> employees = employeeImpl.showEmployeesByDepartment();
-        return employeeImpl.showEmployees();
-    }*/
 
     @GetMapping(path = "/create")
     public Employee creatEmployee() {

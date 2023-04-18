@@ -59,18 +59,10 @@ public class EmployeeImpl implements EmployeeService {
         return employee;
     }
 
-    public String addEmployee(String name, String familyName, int salary, int departent) {
+    public Employee addEmployee(String name, String familyName, int salary, int departent) {
         Employee employee = new Employee(name, familyName, salary, departent);
         employees.add(employee);
-        return "Сотрудник добавлен.";
-    }
-
-    private Map<Integer, Employee> addFunct(Map<Integer, Employee> employees, Employee employee) {
-        /*TreeMap<Integer, Employee> sorted = new TreeMap<>();
-        sorted.putAll(employees);
-        Map.Entry<Integer, Employee> lastEntry = sorted.lastEntry();
-        employees.put(lastEntry.getKey() + 1, employee);*/
-        return employees;
+        return employee;
     }
 
     public List<Employee> showEmployees() {
@@ -78,28 +70,16 @@ public class EmployeeImpl implements EmployeeService {
     }
 
     public List<Employee> showEmployeesByDepartment(int department) {
-        final List<Employee> resListOfEmployees = employees.stream().
-                filter(e -> e.getDepartment() == department)
-                .collect(Collectors.toList());
-        return resListOfEmployees;
-    }
+        List<Employee> resListOfEmployees;
+        try {
+             resListOfEmployees = employees.stream().
+                    filter(e -> e.getDepartment() == department)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            resListOfEmployees = employees;
+        }
 
-    public List<Employee> showEmployeesByDepartment() {
-        final List<Employee> resListOfEmployees = null;
         return resListOfEmployees;
-    }
-
-    public String showEmployeeByID(int employeeID) {
-        String res = "";
-        Employee employee = employees.get(employeeID);
-        res = "<tr>" +
-                "<td>" + employeeID + "</td>" +
-                "<td>" + employee.getName() + "</td>" +
-                "<td>" + employee.getFamilyName() + "</td>" +
-                "<td>" + employee.getSalary() + "</td>" +
-                "<td>" + departments[employee.getDepartment()] + "</td>" +
-                "</tr>\n";
-        return "<p>" + employees.size() +"</p>\n<table style='min-width: 700px;'>" + res + "</table>";
     }
 
 }
