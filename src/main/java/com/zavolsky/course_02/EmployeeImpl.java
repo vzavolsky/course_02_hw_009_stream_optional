@@ -27,7 +27,7 @@ public class EmployeeImpl implements EmployeeService {
     }
 
     public Employee getLimitSalaryEmployee(int department, boolean flag) {
-        int maxSalary = 0;
+        int maxSalary = employees.get(0).getSalary();
         Employee maxSalaryEmployee = null;
         int minSalary = employees.get(0).getSalary();
         Employee minSalaryEmployee = null;
@@ -73,25 +73,19 @@ public class EmployeeImpl implements EmployeeService {
         return employees;
     }
 
-    public String showEmployees() {
-        String res = "";
-        for (Employee employee : employees) {
-            res += "<tr>" +
-                    "<td>" + employee.getEmployeeID() + "</td>" +
-                    "<td>" + employee.getName() + "</td>" +
-                    "<td>" + employee.getFamilyName() + "</td>" +
-                    "<td>" + employee.getSalary() + "</td>" +
-                    "<td>" + departments[employee.getDepartment()] + "</td>" +
-                    "</tr>\n";
-        }
-        return "<p>" + employees.size() +"</p>\n<table style='min-width: 700px;'>" + res + "</table>";
+    public List<Employee> showEmployees() {
+        return employees;
     }
 
     public List<Employee> showEmployeesByDepartment(int department) {
-        String res = "";
         final List<Employee> resListOfEmployees = employees.stream().
                 filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
+        return resListOfEmployees;
+    }
+
+    public List<Employee> showEmployeesByDepartment() {
+        final List<Employee> resListOfEmployees = null;
         return resListOfEmployees;
     }
 

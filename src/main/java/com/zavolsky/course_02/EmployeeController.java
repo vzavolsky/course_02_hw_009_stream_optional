@@ -20,44 +20,31 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/departments/max-salary")
-    public String getMaxSalaryEmployee(@RequestParam("departmentId") int department) {
-        return employeeImpl.getLimitSalaryEmployee(department, true).toString();
+    public Employee getMaxSalaryEmployee(@RequestParam("departmentId") int department) {
+        return employeeImpl.getLimitSalaryEmployee(department, true);
     }
 
     @GetMapping(path = "/departments/min-salary")
-    public String getMinSalaryEmployee(@RequestParam("departmentId") int department) {
-        return employeeImpl.getLimitSalaryEmployee(department, false).toString();
+    public Employee getMinSalaryEmployee(@RequestParam("departmentId") int department) {
+        return employeeImpl.getLimitSalaryEmployee(department, false);
     }
 
     @GetMapping(path = "/departments/all")
-    public String showEmployeesByDepartment(@RequestParam("departmentId") int department) {
-        List<Employee> employees = employeeImpl.showEmployeesByDepartment(department);
-        String res = "";
-        for(Employee employee: employees) {
-            res += "<tr>" +
-                    "<td>" + employee.getEmployeeID() + "</td>" +
-                    "<td>" + employee.getName() + "</td>" +
-                    "<td>" + employee.getFamilyName() + "</td>" +
-                    "<td>" + employee.getSalary() + "</td>" +
-                    "<td>" + employee.getDepartment() + "</td>" +
-                    "</tr>\n";
-        }
-        String tableHeader = "<tr>" +
-                "<td><strong>#ID</strong></td>" +
-                "<td><strong>Name</strong></td>" +
-                "<td><strong>Family name</strong></td>" +
-                "<td><strong>Salary</strong></td>" +
-                "<td><strong>Department</strong></td>" +
-                "</tr>\n";
-        return  "<p>" + employees.size() +"</p>\n<table style='min-width: 700px;'>" + tableHeader + res + "</table>";
+    public List<Employee> showEmployeesByDepartment(@RequestParam("departmentId") int department) {
+        List<Employee> employees = employeeImpl.showEmployeesByDepartment(department);return employees;
     }
+    /*@GetMapping(path = "/departments/all")
+    public List<Employee> showEmployeesByDepartment() {
+        //List<Employee> employees = employeeImpl.showEmployeesByDepartment();
+        return employeeImpl.showEmployees();
+    }*/
 
     @GetMapping(path = "/create")
-    public String creatEmployee() {
-        return employeeImpl.createEmployee().toString();
+    public Employee creatEmployee() {
+        return employeeImpl.createEmployee();
     }
     @GetMapping(path = "/show")
-    public String showEmployees() {
+    public List<Employee> showEmployees() {
         return employeeImpl.showEmployees();
     }
 }
