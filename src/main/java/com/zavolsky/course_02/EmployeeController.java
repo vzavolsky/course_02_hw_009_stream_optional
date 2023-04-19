@@ -10,7 +10,7 @@ import java.util.List;
 public class EmployeeController {
     private final EmployeeImpl employeeImpl;
 
-    EmployeeController (EmployeeImpl employee) {
+    EmployeeController(EmployeeImpl employee) {
         this.employeeImpl = employee;
     }
 
@@ -30,15 +30,15 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/departments/all")
-    public List<Employee> showEmployeesByDepartment(@RequestParam(value = "departmentId", required = false) int department) {
-        List<Employee> employees = employeeImpl.showEmployeesByDepartment(department);
-        return employees;
+    public List<Employee> showEmployeesByDepartment(@RequestParam(value = "departmentId", required = false) String department) {
+        return employeeImpl.showEmployeesByDepartment(department);
     }
 
     @GetMapping(path = "/create")
     public Employee creatEmployee() {
         return employeeImpl.createEmployee();
     }
+
     @GetMapping(path = "/show")
     public List<Employee> showEmployees() {
         return employeeImpl.showEmployees();

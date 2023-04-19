@@ -27,9 +27,11 @@ public class EmployeeImpl implements EmployeeService {
     }
 
     public Employee getLimitSalaryEmployee(int department, boolean flag) {
-        int maxSalary = employees.get(0).getSalary();
+        int maxSalary = employees.stream()
+                .filter(e -> e.getDepartment() == department)
+                .collect(Collectors.toList()).get(0).getSalary();
         Employee maxSalaryEmployee = null;
-        int minSalary = employees.get(0).getSalary();
+        int minSalary = maxSalary;
         Employee minSalaryEmployee = null;
         for (Employee entry : employees) {
             if (entry.getSalary() > maxSalary && entry.getDepartment() == department) {
@@ -69,17 +71,15 @@ public class EmployeeImpl implements EmployeeService {
         return employees;
     }
 
-    public List<Employee> showEmployeesByDepartment(int department) {
-        List<Employee> resListOfEmployees;
+    public List<Employee> showEmployeesByDepartment(String department) {
         try {
-             resListOfEmployees = employees.stream().
-                    filter(e -> e.getDepartment() == department)
+            return employees.stream().
+                    filter(e -> e.getDepartment() == Integer.parseInt(department))
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            resListOfEmployees = employees;
+            System.out.println(e);
+            return employees;
         }
-
-        return resListOfEmployees;
     }
 
 }
