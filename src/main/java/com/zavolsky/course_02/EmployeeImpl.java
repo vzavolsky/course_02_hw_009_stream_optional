@@ -26,14 +26,16 @@ public class EmployeeImpl implements EmployeeService {
                 "</ul>";
     }
 
-    public Optional getLimitSalaryEmployee(int department, boolean flag) {
-        Optional<Employee> maxSalaryEmployee = employees.stream()
+    public Optional getMaxSalaryEmployee(int department) {
+        return employees.stream()
                 .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.maxBy(Comparator.comparing(Employee:: getSalary)));
-        Optional<Employee> minSalaryEmployee = employees.stream()
+    }
+
+    public Optional getMinSalaryEmployee(int department) {
+        return employees.stream()
                 .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.minBy(Comparator.comparing(Employee:: getSalary)));
-        return flag ? maxSalaryEmployee : minSalaryEmployee;
     }
 
     public Employee createEmployee() {
@@ -51,38 +53,19 @@ public class EmployeeImpl implements EmployeeService {
         return employee;
     }
 
-    public Employee addEmployee(String name, String familyName, int salary, int departent) {
-        Employee employee = new Employee(name, familyName, salary, departent);
-        employees.add(employee);
-        return employee;
-    }
-
     public List<Employee> showEmployees() {
         return employees;
     }
 
+    public Map<Integer, List<Employee>> showEmployeesByDepartment() {
+        return employees.stream().
+                collect(Collectors.groupingBy(Employee::getDepartment));
+    }
+
     public Map<Integer, List<Employee>> showEmployeesByDepartment(Integer department) {
-        Map<Integer, List<Employee>> employeesByDepartmentList = new HashMap<Integer, List<Employee>>();
-        for (Employee employee : employees) {
-            List<Employee> list = employeesByDepartmentList.get(employee.getDepartment());
-            if (list == null) {
-                list = new ArrayList<>();
-            }
-            list.add(employee);
-            employeesByDepartmentList.put(employee.getDepartment(), list);
-        }
-        try {
-            for (Map.Entry<Integer, List<Employee>> entry: employeesByDepartmentList.entrySet()) {
-                if (entry.getKey() == department) {
-                    Map<Integer, List<Employee>> employeesByDep = new HashMap<>();
-                    employeesByDep.put(department,entry.getValue());
-                    return employeesByDep;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return employeesByDepartmentList;
+        return employees.stream().
+                filter(e -> e.getDepartment() == department)
+                .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
 }

@@ -23,17 +23,17 @@ public class EmployeeController {
 
     @GetMapping(path = "/departments/max-salary")
     public Optional getMaxSalaryEmployee(@RequestParam("departmentId") int department) {
-        return employeeImpl.getLimitSalaryEmployee(department, true);
+        return employeeImpl.getMaxSalaryEmployee(department);
     }
 
     @GetMapping(path = "/departments/min-salary")
     public Optional getMinSalaryEmployee(@RequestParam("departmentId") int department) {
-        return employeeImpl.getLimitSalaryEmployee(department, false);
+        return employeeImpl.getMinSalaryEmployee(department);
     }
 
     @GetMapping(path = "/departments/all")
     public Map<Integer, List<Employee>> showEmployeesByDepartment(@RequestParam(value = "departmentId", required = false) Integer department) {
-        return employeeImpl.showEmployeesByDepartment(department);
+        return department == null ? employeeImpl.showEmployeesByDepartment() : employeeImpl.showEmployeesByDepartment(department);
     }
 
     @GetMapping(path = "/create")

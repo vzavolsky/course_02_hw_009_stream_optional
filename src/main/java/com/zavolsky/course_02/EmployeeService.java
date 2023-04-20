@@ -4,5 +4,6 @@ import java.util.Optional;
 
 public interface EmployeeService {
     String greetings();
-    Optional getLimitSalaryEmployee(int department, boolean flag);
+    Optional getMaxSalaryEmployee(int department);
+    Optional getMinSalaryEmployee(int department);
 }
