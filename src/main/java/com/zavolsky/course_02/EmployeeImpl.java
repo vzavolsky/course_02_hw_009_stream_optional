@@ -45,7 +45,7 @@ public class EmployeeImpl implements EmployeeService {
                 names[s.nextInt(names.length - 1)],
                 fNames[s.nextInt(fNames.length - 1)],
                 s.nextInt(100_000) + 50_000,
-                s.nextInt(departments.length - 1)
+                s.nextInt(departments.length)
         );
         employees.add(employee);
         return employee;
