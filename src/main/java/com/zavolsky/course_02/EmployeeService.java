@@ -1,6 +1,8 @@
 package com.zavolsky.course_02;
 
+import java.util.Optional;
+
 public interface EmployeeService {
     String greetings();
-    Employee getLimitSalaryEmployee(int department, boolean flag);
+    Optional getLimitSalaryEmployee(int department, boolean flag);
 }

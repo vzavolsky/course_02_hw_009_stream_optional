@@ -26,23 +26,13 @@ public class EmployeeImpl implements EmployeeService {
                 "</ul>";
     }
 
-    public Employee getLimitSalaryEmployee(int department, boolean flag) {
-        int maxSalary = employees.stream()
+    public Optional getLimitSalaryEmployee(int department, boolean flag) {
+        Optional<Employee> maxSalaryEmployee = employees.stream()
                 .filter(e -> e.getDepartment() == department)
-                .collect(Collectors.toList()).get(0).getSalary();
-        Employee maxSalaryEmployee = null;
-        int minSalary = maxSalary;
-        Employee minSalaryEmployee = null;
-        for (Employee entry : employees) {
-            if (entry.getSalary() > maxSalary && entry.getDepartment() == department) {
-                maxSalary = entry.getSalary();
-                maxSalaryEmployee = entry;
-            }
-            if (entry.getSalary() < minSalary && entry.getDepartment() == department) {
-                minSalary = entry.getSalary();
-                minSalaryEmployee = entry;
-            }
-        }
+                .collect(Collectors.maxBy(Comparator.comparing(Employee:: getSalary)));
+        Optional<Employee> minSalaryEmployee = employees.stream()
+                .filter(e -> e.getDepartment() == department)
+                .collect(Collectors.minBy(Comparator.comparing(Employee:: getSalary)));
         return flag ? maxSalaryEmployee : minSalaryEmployee;
     }
 
@@ -71,15 +61,28 @@ public class EmployeeImpl implements EmployeeService {
         return employees;
     }
 
-    public List<Employee> showEmployeesByDepartment(String department) {
+    public Map<Integer, List<Employee>> showEmployeesByDepartment(Integer department) {
+        Map<Integer, List<Employee>> employeesByDepartmentList = new HashMap<Integer, List<Employee>>();
+        for (Employee employee : employees) {
+            List<Employee> list = employeesByDepartmentList.get(employee.getDepartment());
+            if (list == null) {
+                list = new ArrayList<>();
+            }
+            list.add(employee);
+            employeesByDepartmentList.put(employee.getDepartment(), list);
+        }
         try {
-            return employees.stream().
-                    filter(e -> e.getDepartment() == Integer.parseInt(department))
-                    .collect(Collectors.toList());
+            for (Map.Entry<Integer, List<Employee>> entry: employeesByDepartmentList.entrySet()) {
+                if (entry.getKey() == department) {
+                    Map<Integer, List<Employee>> employeesByDep = new HashMap<>();
+                    employeesByDep.put(department,entry.getValue());
+                    return employeesByDep;
+                }
+            }
         } catch (Exception e) {
             System.out.println(e);
-            return employees;
         }
+        return employeesByDepartmentList;
     }
 
 }

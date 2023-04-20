@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class EmployeeController {
@@ -20,17 +22,17 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/departments/max-salary")
-    public Employee getMaxSalaryEmployee(@RequestParam("departmentId") int department) {
+    public Optional getMaxSalaryEmployee(@RequestParam("departmentId") int department) {
         return employeeImpl.getLimitSalaryEmployee(department, true);
     }
 
     @GetMapping(path = "/departments/min-salary")
-    public Employee getMinSalaryEmployee(@RequestParam("departmentId") int department) {
+    public Optional getMinSalaryEmployee(@RequestParam("departmentId") int department) {
         return employeeImpl.getLimitSalaryEmployee(department, false);
     }
 
     @GetMapping(path = "/departments/all")
-    public List<Employee> showEmployeesByDepartment(@RequestParam(value = "departmentId", required = false) String department) {
+    public Map<Integer, List<Employee>> showEmployeesByDepartment(@RequestParam(value = "departmentId", required = false) Integer department) {
         return employeeImpl.showEmployeesByDepartment(department);
     }
 
