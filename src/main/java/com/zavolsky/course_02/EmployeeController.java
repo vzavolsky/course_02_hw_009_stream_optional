@@ -41,6 +41,11 @@ public class EmployeeController {
         return employeeImpl.createEmployee();
     }
 
+    @GetMapping(path = "/add")
+    public Employee addEmployee(@RequestParam("name") String name, @RequestParam("fname") String fName) {
+        return employeeImpl.addEmployee(name, fName);
+    }
+
     @GetMapping(path = "/show")
     public List<Employee> showEmployees() {
         return employeeImpl.showEmployees();

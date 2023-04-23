@@ -68,4 +68,16 @@ public class EmployeeImpl implements EmployeeService {
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
+    public Employee addEmployee(String name, String fName) {
+
+        Random s = new Random();
+        Employee employee = new Employee(
+                name,
+                fName,
+                s.nextInt(100_000) + 50_000,
+                s.nextInt(departments.length)
+        );
+        employees.add(employee);
+        return employee;
+    }
 }
