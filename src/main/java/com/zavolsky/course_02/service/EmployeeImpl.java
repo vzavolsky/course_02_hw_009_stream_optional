@@ -1,8 +1,13 @@
-package com.zavolsky.course_02;
+package com.zavolsky.course_02.service;
 
+import com.zavolsky.course_02.domain.Employee;
+import com.zavolsky.course_02.EmployeeService;
+import com.zavolsky.course_02.exceptions.BadRequestException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,11 +74,13 @@ public class EmployeeImpl implements EmployeeService {
     }
 
     public Employee addEmployee(String name, String fName) {
-
+        if (StringUtils.removeAll(name, "[a-zA-Zа-яА-Я]+").length() > 0 || StringUtils.removeAll(fName, "[a-zA-Zа-яА-Я]+").length() > 0) {
+            throw new BadRequestException();
+        }
         Random s = new Random();
         Employee employee = new Employee(
-                name,
-                fName,
+                StringUtils.capitalize(name),
+                StringUtils.capitalize(fName),
                 s.nextInt(100_000) + 50_000,
                 s.nextInt(departments.length)
         );

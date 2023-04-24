@@ -1,5 +1,7 @@
-package com.zavolsky.course_02;
+package com.zavolsky.course_02.controller;
 
+import com.zavolsky.course_02.domain.Employee;
+import com.zavolsky.course_02.service.EmployeeImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

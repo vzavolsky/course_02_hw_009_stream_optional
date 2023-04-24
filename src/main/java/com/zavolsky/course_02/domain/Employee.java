@@ -1,4 +1,4 @@
-package com.zavolsky.course_02;
+package com.zavolsky.course_02.domain;
 
 public class Employee {
     private String name;
@@ -9,12 +9,11 @@ public class Employee {
     private static int employeeIDinc = 0;
     private int employeeID = ++employeeIDinc;
 
-    Employee(String name, String familyName, int salary, int department) {
+    public Employee(String name, String familyName, int salary, int department) {
         this.name = name;
         this.familyName = familyName;
         this.salary = salary;
         this.department = department;
-
     }
 
     public int getEmployeeID() {
