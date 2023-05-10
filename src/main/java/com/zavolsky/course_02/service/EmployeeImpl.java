@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,13 +33,13 @@ public class EmployeeImpl implements EmployeeService {
     public Optional getMaxSalaryEmployee(int department) {
         return employees.stream()
                 .filter(e -> e.getDepartment() == department)
-                .collect(Collectors.maxBy(Comparator.comparing(Employee:: getSalary)));
+                .collect(Collectors.maxBy(Comparator.comparing(Employee::getSalary)));
     }
 
     public Optional getMinSalaryEmployee(int department) {
         return employees.stream()
                 .filter(e -> e.getDepartment() == department)
-                .collect(Collectors.minBy(Comparator.comparing(Employee:: getSalary)));
+                .collect(Collectors.minBy(Comparator.comparing(Employee::getSalary)));
     }
 
     public Employee createEmployee() {
